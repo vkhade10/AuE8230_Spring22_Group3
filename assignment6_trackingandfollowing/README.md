@@ -2,6 +2,11 @@
 
 This ```Readme``` contains information about what is in package  "assignment6_trackingandfollowing" and how to launch the files. Demo video of all task is in ```assignment6_trackingandfollowing/Videos```.
 
+### Learning Outcomes
+
+1. Manipulating image data for tracking a point.
+2. Implementing path tracking controllers in Python
+
 ## Camera Calibration
 
 When starting the assignment the Raspberrypi camera interface was setup and relevant packages were installed by following the instructions in the [TurtleBot3 manual](https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_raspi_cam/).
