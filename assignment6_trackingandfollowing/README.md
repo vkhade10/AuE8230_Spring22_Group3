@@ -1,4 +1,4 @@
-# Assignment 6: Line Following and Apriltag tracking
+# Assignment 6: Line Following and Apriltag Tracking
 
 This ```Readme``` contains information about what is in package  "assignment6_trackingandfollowing" and how to launch the files. Demo video of all task is in ```assignment6_trackingandfollowing/Videos```.
 
