@@ -7,11 +7,11 @@ This ```Readme``` contains information about what is in package  "assignment7" a
 1. SLAM on the real turtlebot
 2. Comparison between two different lidars for building the map for SLAM in gazebo
 
-### Part 1: SLAM and Navigation
+## Part 1: SLAM and Navigation
 
 This part done completely on the physical turtlebot.
 
-1. Run gmapping SLAM node and save the map.
+### 1. Run gmapping SLAM node and save the map.
 
 Run the folllowing commands for Gmapping
 
@@ -29,7 +29,7 @@ Here ```map``` is the name of map file.
 
 
 
-2. Run karto SLAM node and save the map
+### 2. Run karto SLAM node and save the map
 
 i) Install dependent packages on PC.
 
@@ -55,4 +55,4 @@ Here ```map``` is the name of map file.
 
 
 
-### Part 2: Comparison between two lidars
+## Part 2: Comparison between two lidars
