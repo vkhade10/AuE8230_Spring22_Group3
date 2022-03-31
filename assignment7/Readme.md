@@ -27,7 +27,16 @@ For saving the map -
 
 Here ```map``` is the name of map file.
 
+Run the Navigation -
 
+```roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml```
+
+Specifying the name of map in place of ```map.yaml```
+
+Specify the initial pose by - 
+
+1. Clicking the 2D Pose Estimate button in the RViz menu
+2. Clicking the 2D Nav Goal button in the RViz menu.
 
 ### 2. Run karto SLAM node and save the map
 
@@ -54,6 +63,16 @@ For saving the map -
 Here ```map``` is the name of map file.
 
 
+Run the Navigation -
+
+```roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml```
+
+Specifying the name of map in place of ```map.yaml```
+
+Specify the initial pose by - 
+
+1. Clicking the 2D Pose Estimate button in the RViz menu
+2. Clicking the 2D Nav Goal button in the RViz menu.
 
 ## Part 2: Comparison between two lidars
 
