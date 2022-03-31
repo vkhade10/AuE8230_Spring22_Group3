@@ -56,3 +56,10 @@ Here ```map``` is the name of map file.
 
 
 ## Part 2: Comparison between two lidars
+
+This part done in Gazebo simulation environment
+
+### 1. Run the SLAM node and save the map using the lidar that is already present on the turtlebot
+
+
+### 2.Run the SLAM node and save the map using the Hokuyo 3D lidar.
