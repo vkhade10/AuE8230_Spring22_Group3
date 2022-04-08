@@ -81,10 +81,10 @@ This part done in Gazebo simulation environment
 ### 1. Run the SLAM node and save the map using the lidar that is already present on the turtlebot
 
 The map saved using the already present LDS lidar is shown below,
-<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/Map%20files/map.pgm" width="50%" height="50%">
+<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/Map%20files/map.png" width="50%" height="50%">
 
 ### 2.Run the SLAM node and save the map using the Hokuyo 3D lidar.
 
 The map saved using the already present Hokuyo lidar is shown below,
-<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/Map%20files/hokuyo_map.pgm" width="50%" height="50%">
+<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/Map%20files/hokuyo_map.png" width="50%" height="50%">
 
