@@ -171,5 +171,5 @@ Navigation with Hokuyo:
 <img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_Nav.gif" width="50%" height="50%">   
 
 Navigation with LDS:
-![](https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/LDS_Nav.gif)
-  
+
+<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/LDS_Nav.gif" width="50%" height="50%">  
