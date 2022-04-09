@@ -109,6 +109,7 @@ Upon using the provided urdf & message files for the hokuyo lidar to update the 
 
 - But even with this update, the resultant map was coming out to be distorted(shown below).
 
+<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_slamdistorted.gif" width="50%" height="50%">
 ![Hokuyo_slamdistorted.gif](https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_slamdistorted.gif)
 
 - To fix this, further modifications were made to the gazebo description. The no. of samples were both made equal to 74 (initially tried with 100 but no improvements were obtained). Further, the sensor type was changed to ```ray``` from ```gpu_ray```
@@ -155,11 +156,12 @@ Thus the final description of Hokuyo lidar in the turtlebot3's gazebo descriptio
         <frameName>base_scan</frameName>
       </plugin>
     </sensor>
-  </gazebo>```
+  </gazebo>```````
   
   
 II) Observations
 - The LDS lidar seems to take lesser time to localize & locate the bot in the environment. This could be due to the fact that LDS lidar only uses horizontal scan values whereas in case of Hokuyo, both vertical & horizontal scan values are used
 - Using Hokuyo lidar seems to result in more accurate mapping and the navigation path being more optimal (see following figures).
-   
+
+<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_Nav.gif" width="50%" height="50%">   
 ![Hokuyo_Nav.gif](https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_Nav.gif) 
