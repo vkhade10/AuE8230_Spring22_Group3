@@ -112,7 +112,7 @@ Upon using the provided urdf & message files for the hokuyo lidar to update the 
 - But even with this update, the resultant map was coming out to be distorted(shown below).
 
 <img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_slamdistorted.gif" width="50%" height="50%">
-![Hokuyo_slamdistorted.gif](https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_slamdistorted.gif)
+
 
 - To fix this, further modifications were made to the gazebo description. The no. of samples were both made equal to 74 (initially tried with 100 but no improvements were obtained). Further, the sensor type was changed to ```ray``` from ```gpu_ray```
 
@@ -171,4 +171,5 @@ Navigation with Hokuyo:
 <img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_Nav.gif" width="50%" height="50%">   
 
 Navigation with LDS:
+![](https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/LDS_Nav.gif)
 <img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/LDS_Nav.gif" width="50%" height="50%">  
