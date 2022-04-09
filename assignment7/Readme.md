@@ -103,9 +103,11 @@ Upon using the provided urdf & message files for the hokuyo lidar to update the 
 - With the initially given parameter values, '/scan' topic didnot output any data and an error 'Laser is mounted upwards' was thrown.
 - On reducing the resolution and the min & max angle values, we were able to receive '/scan' topic information. The updated values were,
 
-```<resolution>0.025</resolution>
-   <min_angle>0.0</min_angle>
-   <max_angle>0.1</max_angle>```
+```
+<resolution>0.025</resolution>
+<min_angle>0.0</min_angle>
+<max_angle>0.1</max_angle>
+```
 
 - But even with this update, the resultant map was coming out to be distorted(shown below).
 
@@ -116,7 +118,8 @@ Upon using the provided urdf & message files for the hokuyo lidar to update the 
 
 Thus the final description of Hokuyo lidar in the turtlebot3's gazebo description was,
 
-```<gazebo reference="base_scan">
+```
+<gazebo reference="base_scan">
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
@@ -157,12 +160,15 @@ Thus the final description of Hokuyo lidar in the turtlebot3's gazebo descriptio
       </plugin>
     </sensor>
   </gazebo>
-  ```
+```
   
   
 II) Observations
 - The LDS lidar seems to take lesser time to localize & locate the bot in the environment. This could be due to the fact that LDS lidar only uses horizontal scan values whereas in case of Hokuyo, both vertical & horizontal scan values are used
 - Using Hokuyo lidar seems to result in more accurate mapping and the navigation path being more optimal (see following figures).
 
+Navigation with Hokuyo:
 <img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_Nav.gif" width="50%" height="50%">   
-![Hokuyo_Nav.gif](https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/Hokuyo_Nav.gif) 
+
+Navigation with LDS:
+<img src="https://github.com/Abetelgeusian/AuE8230_Spring22_Group3/blob/master/assignment7/videos/LDS_Nav.gif" width="50%" height="50%">  
