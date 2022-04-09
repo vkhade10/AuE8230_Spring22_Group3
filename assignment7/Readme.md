@@ -103,9 +103,9 @@ Upon using the provided urdf & message files for the hokuyo lidar to update the 
 - With the initially given parameter values, '/scan' topic didnot output any data and an error 'Laser is mounted upwards' was thrown.
 - On reducing the resolution and the min & max angle values, we were able to receive '/scan' topic information. The updated values were,
 
-```<resolution>0.025</resolution>```
-```<min_angle>0.0</min_angle>```
-```<max_angle>0.1</max_angle>```
+```<resolution>0.025</resolution>
+   <min_angle>0.0</min_angle>
+   <max_angle>0.1</max_angle>```
 
 - But even with this update, the resultant map was coming out to be distorted(shown below).
 
@@ -156,7 +156,8 @@ Thus the final description of Hokuyo lidar in the turtlebot3's gazebo descriptio
         <frameName>base_scan</frameName>
       </plugin>
     </sensor>
-  </gazebo>```````
+  </gazebo>
+  ```
   
   
 II) Observations
