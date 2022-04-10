@@ -1,0 +1,7 @@
+image: /home/venky/krato_5203.pgm
+resolution: 0.050000
+origin: [-2.391528, -0.066285, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
