@@ -33,6 +33,8 @@ Run the Navigation -
 
 Specifying the name of map in place of ```map.yaml```
 
+![5203](https://user-images.githubusercontent.com/79803663/162640408-c0084081-2134-45f2-afc9-5523418cd303.png)
+
 Specify the initial pose by - 
 
 1. Clicking the 2D Pose Estimate button in the RViz menu
@@ -62,6 +64,7 @@ For saving the map -
 
 Here ```map``` is the name of map file.
 
+![krato_5203](https://user-images.githubusercontent.com/79803663/162640416-8e039f6d-f20e-468a-85bc-a3bcbab16e22.png)
 
 Run the Navigation -
 
