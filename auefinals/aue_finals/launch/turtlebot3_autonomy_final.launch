@@ -7,6 +7,11 @@
   <arg name="z_pos" default="0"/>  
   <arg name="yaw_pos" default="3.14"/>
 
+  <arg name = "tb3_april" default="tb3_lead" />
+  <arg name="x1_pos" default="1.45"/>
+  <arg name="y1_pos" default="0.75"/>
+  <arg name="z1_pos" default="0.0"/>
+  <arg name="yaw1_pos" default="1.57"/>
 
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -16,7 +21,6 @@
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
-    <arg name="verbose" value="false" />
   </include>  
 
    <!--<include file="$(find person_sim)/launch/init_small_standing_person.launch">
@@ -37,8 +41,30 @@
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model turtlebot3_$(arg model) -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -Y $(arg yaw_pos) -param robot_description" />
+  
+  <group ns = "$(arg tb3_april)">
+    <!-- Load Burger description -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find aue_finals)/urdf/turtlebot3_$(arg model)_april.urdf.xacro" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg tb3_april)" />
+    </node>
+ 
+    <!-- Load Gazebo -->   
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model $(arg tb3_april) -x $(arg x1_pos) -y $(arg y1_pos) -z $(arg z1_pos) -Y $(arg yaw1_pos) -param robot_description" />
+  </group>
 
   <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot3_gazebo)/rviz/turtlebot3_gazebo_model.rviz"/>-->
+  
+  <node name="republish" type="republish" pkg="image_transport" output="screen" 	args="compressed in:=/camera/rgb/image_raw raw out:=/camera/rgb/image_raw" /> 
+  <node name="image_view" type="image_view" pkg="image_view" output="screen" 	args="image:=/tb3_lead/camera/rgb/image_raw" />
+  
+  
+  <!--node pkg="aue_finals" type="trial1.py" name="testing"/-->
+  <include file="$(find darknet_ros)/launch/darknet_ros.launch"/>
+ 
+  <include file="$(find aue_finals)/launch/continuous_detection.launch" />
 </launch>
 
 
