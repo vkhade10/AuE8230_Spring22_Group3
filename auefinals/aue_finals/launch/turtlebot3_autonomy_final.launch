@@ -61,7 +61,7 @@
   <node name="image_view" type="image_view" pkg="image_view" output="screen" 	args="image:=/tb3_lead/camera/rgb/image_raw" />
   
   
-  <!--node pkg="aue_finals" type="trial1.py" name="testing"/-->
+  <node pkg="aue_finals" type="trial1.py" name="testing"/>
   <include file="$(find darknet_ros)/launch/darknet_ros.launch"/>
  
   <include file="$(find aue_finals)/launch/continuous_detection.launch" />
