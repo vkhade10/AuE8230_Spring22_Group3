@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+import rospy
+import cv2
+import numpy as np
+from cv_bridge import CvBridge, CvBridgeError
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Image
+
+class LineFollower(object):
+
+    def __init__(self,pub):
+        self.bridge_object = CvBridge()
+        self.pub = pub
+        self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
+        #self.moveTurtlebot3_object = MoveTurtlebot3()
+
+    def camera_callback(self, data):
+        # We select bgr8 because its the OpneCV encoding by default
+        cv_image = self.bridge_object.imgmsg_to_cv2(data, desired_encoding="bgr8")
+
+        # We get image dimensions and crop the parts of the image we dont need
+        height, width, channels = cv_image.shape
+        print(f'height:{height}, width:{width}')
+        #crop_img = cv_image[int((height/2)+100):int((height/2)+120)][1:int(width)] # original
+    def clean_up(self):
+        # self.moveTurtlebot3_object.clean_class()
+        cv2.destroyAllWindows()
+def main():
+    rospy.init_node('test_node', anonymous=True)
+    pub = rospy.Publisher('cmd_vel', Twist, queue_size= 10)
+    line_follower_object = LineFollower(pub)
+    rate = rospy.Rate(5)
+    ctrl_c = False
+    def shutdownhook():
+        # Works better than rospy.is_shutdown()
+        line_follower_object.clean_up()
+        rospy.loginfo("Shutdown time!")
+        ctrl_c = True
+    rospy.on_shutdown(shutdownhook)
+    while not ctrl_c:
+        rate.sleep()
+
+if __name__ == '__main__':
+        main()

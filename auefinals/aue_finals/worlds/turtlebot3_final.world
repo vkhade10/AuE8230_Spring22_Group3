@@ -287,7 +287,7 @@
       </model>
       <model name='unit_box_0'>
         <pose frame=''>-1.67923 -1.71215 0.0732 2e-06 3e-06 1.56162</pose>
-        <scale>0.245846 0.219412 0.146399</scale>
+        <scale>0.245846 0.219412 0.4</scale>
         <link name='link'>
           <pose frame=''>-1.67923 -1.71215 0.0732 2e-06 3e-06 1.56162</pose>
           <velocity>0 0 0 0 -0 0</velocity>

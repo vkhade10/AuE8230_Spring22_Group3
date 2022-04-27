@@ -5,7 +5,7 @@ import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
-#from move_robot import MoveTurtlebot3
+from move_robot import MoveTurtlebot3
 from darknet_ros_msgs.msg import BoundingBoxes
 traffic_sign_c = 0
 
@@ -31,7 +31,7 @@ class LineFollower(object):
         self.pub = pub
         self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
         self.stop_sign_subscriber = rospy.Subscriber('/darknet_ros/bounding_boxes' , BoundingBoxes, self.stop_sign_callback)
-        #self.moveTurtlebot3_object = MoveTurtlebot3()
+        self.moveTurtlebot3_object = MoveTurtlebot3()
 
     def stop_sign_callback(self,msg):
         global num
@@ -44,7 +44,7 @@ class LineFollower(object):
                 area = abs(box.xmax-box.xmin)*abs(box.ymax-box.ymin)
                 print(area,'area')
                 print('probability',probability)
-                if ((probability >= 0.85) and (area >=6000)):
+                if ((probability >= 0.85) and (area >=6000)): 
                     print('stop_sign_detected')
                     num = 1
 
@@ -65,7 +65,7 @@ class LineFollower(object):
         # Define the Yellow Colour in HSV
 
         """
-        To know which color to track in HSV use ColorZilla to get the color registered by the camera in BGR and convert to HSV.
+        To know which color to track in HSV use ColorZilla to get the color registered by the camera in BGR and convert to HSV. 
         """
 
         # Threshold the HSV image to get only yellow colors
@@ -80,9 +80,9 @@ class LineFollower(object):
             cx, cy = m['m10']/m['m00'], m['m01']/m['m00']
         except ZeroDivisionError:
             cx, cy = height/2, width/2
-
+        
         # Draw the centroid in the resultut image
-        # cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]])
+        # cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]]) 
         cv2.circle(mask,(int(cx), int(cy)), 10,(0,0,255),-1)
         cv2.imshow("Original", cv_image)
         cv2.imshow("MASK", mask)
@@ -91,9 +91,9 @@ class LineFollower(object):
         #################################
         ###   ENTER CONTROLLER HERE   ###
         #################################
-
-
-        global u
+        
+        
+        global u 
         global e11
         global e21
         global e31
@@ -109,10 +109,10 @@ class LineFollower(object):
             # rospy.loginfo('K21:'+ str(k21))
             # rospy.loginfo('K31:'+ str(k31))
             # rospy.loginfo('U:'+ str(u))
-            twist_object.linear.x = 0 #0.1
-            twist_object.angular.z =  0 # -u/390 # we use negative sign here, to turn away from the blob.
+            twist_object.linear.x = 0.1
+            twist_object.angular.z =  -u/390 # we use negative sign here, to turn away from the blob.
             #Otherwise turtlebot will go out of the track.
-
+            
             # rospy.loginfo("ANGULAR VALUE SENT===>"+str(twist_object.angular.z))
             # Make it start turning
             # self.moveTurtlebot3_object.move_robot(twist_object)
@@ -122,22 +122,21 @@ class LineFollower(object):
             if num ==1:
                 twist_object.linear.x = 0
                 twist_object.angular.z = 0
-                self.pub.publish(twist_object)
-                #self.moveTurtlebot3_object.move_robot(twist_object)
+                self.moveTurtlebot3_object.move_robot(twist_object)
                 rospy.sleep(3)
                 num = 2
                 loop_once = 0
 
 
     # def traffic_sign_callback(self,data):
-    #     global traffic_sign_c
+    #     global traffic_sign_c 
     #     for box in data.bounding_boxes:
     #         if box.id ==11:
-    #             traffic_sign_c=1
+    #             traffic_sign_c=1 
     #             rospy.loginfo('Traffic sign detected')
     #         if box.id !=11:
     #             rospy.loginfo('Sign not detected')
-
+                
         # pub = rospy.Publisher("/stop_sign", Int64, queue_size=10)
         # msg = Int64()
         # msg.data = traffic_sign_c

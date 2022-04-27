@@ -199,8 +199,7 @@ class LineFollower(object):
         e21 = e11
         e11 = e
         u = u + k11*e11 + k21*e21 + k31*e31
-        twist_object.linear.x = 0.1
-        twist_object.angular.z =  -u/390 # we use negative sign here, to turn away from the blob.
+       
 
         if flag==1 and controller ==1 :
 
@@ -208,13 +207,15 @@ class LineFollower(object):
             # rospy.loginfo('K21:'+ str(k21))
             # rospy.loginfo('K31:'+ str(k31))
             # rospy.loginfo('U:'+ str(u))
-            print('line_controller',controller)
+            # print('line_controller',controller)
             #Otherwise turtlebot will go out of the track.
-            print(twist_object.linear.x)
-            print(twist_object.angular.z)
-            self.pub.publish(twist_object)
-            print('chaltay')
+            # print(twist_object.linear.x)
+            # print(twist_object.angular.z)
+            # self.pub.publish(twist_object)
+            # print('chaltay')
             det_flag =1
+            twist_object.linear.x = 0.1
+            twist_object.angular.z =  -u/390 # we use negative sign here, to turn away from the blob.
 
             global num
             global loop_once
@@ -222,28 +223,27 @@ class LineFollower(object):
             if num ==1:
                 twist_object.linear.x = 0
                 twist_object.angular.z = 0
-                self.pub.publish(twist_object)
                 # april_tag_flag = 1
                 #self.moveTurtlebot3_object.move_robot(twist_object)
                 num = 2
-                loop_once = 0
+                controller = 0
                 rospy.sleep(3)
                 april_tag_flag = 1
-                
+        self.pub.publish(twist_object)    
 
     def  april_callback(self,data):
         rospy.loginfo("I'm Here ! ")
         global angle, linear_dist
 
-        if april_tag_flag == 1:  
+        if april_tag_flag == 1 and controller == 0:  
             print("AprilTag baby")      
             try:
                 vel_msg = Twist()
                 angle = data.detections[0].pose.pose.pose.position.x        #compensate the width to determine the right x difference
                 linear_dist = data.detections[0].pose.pose.pose.position.z           #the z position represents the depth from the camera cooridnates
                 if linear_dist > 0.035:
-                    vel_msg.linear.x = linear_dist
-                    vel_msg.angular.z = -angle * 10 
+                    vel_msg.linear.x = 0 #linear_dist
+                    vel_msg.angular.z = 0 #-angle * 10 
                     self.pub.publish(vel_msg)
                 else:                
                     vel_msg.linear.x = 0

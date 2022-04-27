@@ -22,7 +22,7 @@ e11 = 0
 e21 = 0
 e31 = 0
 u = 0
-kp = 0.45
+kp = 0.4
 ki = 0.003
 kd = 0.1
 k11 = kp + ki + kd
@@ -85,18 +85,23 @@ class LineFollower(object):
 
         while det_flag<1 and d<2:
 
-            error = (left_min - right_min)/2
-            if front_min <= 0.25: 
-                vel_msg.linear.x = 0
-                vel_msg.angular.z = 0.08
-            if front_min > 0.25: vel_msg.linear.x = 0.13
+            e = (left_min - right_min)
+            
+            if front_min <= 0.25: #and e > 0:
+                vel_msg.linear.x = -0.05
+                vel_msg.angular.z = 0.1
+            # elif front_min <= 0.25 and e<0: 
+            #     vel_msg.linear.x = -0.05
+            #     vel_msg.angular.z = 0.12
+            else: # front_min > 0.25:
+                vel_msg.linear.x = 0.12
 
-            if error!= float("inf") and error != float("-inf"):
-                vel_msg.angular.z = error * 3
+            if e!= float("inf") and e!= float("-inf"):
+                vel_msg.angular.z = e * 3.1
+           
             if d!=2 and d!=3:
                 self.vel_pub.publish(vel_msg)
-            self.rate.sleep()
-
+            # self.rate.sleep()
             print('wall_controller')
 
     def stop_sign_callback(self,msg):
