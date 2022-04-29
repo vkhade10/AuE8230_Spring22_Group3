@@ -30,23 +30,29 @@ class Apriltag_follower(object):
         cv2.waitKey(1)
 
     def callback(self, data):
-        rospy.loginfo("I'm Here ! ")
+        #rospy.loginfo("I'm Here ! ")
         global angle, linear_dist
         
         try:
             vel_msg = Twist()
             angle = data.detections[0].pose.pose.pose.position.x        #compensate the width to determine the right x difference
             linear_dist = data.detections[0].pose.pose.pose.position.z           #the z position represents the depth from the camera cooridnates
-            if linear_dist > 0.035:
+            if linear_dist > 0.05:
                 vel_msg.linear.x = linear_dist
                 vel_msg.angular.z = -angle * 10 
+                self.pub.publish(vel_msg)
+            elif linear_dist < 0.035:
+                vel_msg.linear.x = -((0.05-linear_dist)/0.05) * 0.1
+                vel_msg.angular.z = angle * 10 
                 self.pub.publish(vel_msg)
             else:                
                 vel_msg.linear.x = 0
                 vel_msg.angular.z = 0
                 self.pub.publish(vel_msg)
         except IndexError:
-                rospy.loginfo('Tag not detected')
+                vel_msg.angular.z = -0.1
+                self.pub.publish(vel_msg)
+               # rospy.loginfo('Tag not detected')
 
 
 def main():

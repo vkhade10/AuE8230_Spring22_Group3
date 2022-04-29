@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import rospy
 import time
@@ -7,9 +7,7 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 from darknet_ros_msgs.msg import BoundingBoxes
-from decimal import *
 import numpy as np
-from apriltag_ros.msg import AprilTagDetectionArray
 import cv2
 
 global d, det_flag
@@ -31,102 +29,29 @@ k21 = -kp - 2*kd
 k31 = kd
 num = 0
 controller = 0
-
-# for april tag
-april_tag_flag = 0
-angle = 0
-linear_dist = 0
-# centroid_flag = 0
+ind = 0
+right_cone1 = []
+front_cone1 = []
+right_min1 = 0 
+left_dist = 0
+right_dist = 0 
+left_theta = 0
+right_theta = 0
+front1 = 0
+left_ar = 0
+right_ar = 0
+n_w = 0
 
 class LineFollower(object):
-
-    def __init__(self,pub):
+    def __init__(self):
         self.bridge_object = CvBridge()
-        self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.camera_callback)
-        self.scan_sub = rospy.Subscriber('/scan', LaserScan, self.callback_lidar)
+        self.image_sub = rospy.Subscriber("/camera/image",Image,self.camera_callback)
+        self.scan_sub = rospy.Subscriber('/scan', LaserScan, self.callback_wall)
         self.stop_sign_subscriber = rospy.Subscriber('/darknet_ros/bounding_boxes' , BoundingBoxes, self.stop_sign_callback)
-        self.pub = pub
-        self.image_sub = rospy.Subscriber('/tag_detections_image', Image, self.camera_callback)
-        self.sub = rospy.Subscriber('/tag_detections', AprilTagDetectionArray,self.april_callback)
-        self.rate = rospy.Rate(200)
-
-    def callback_lidar(self, data):
-        global right_min, left_min, front_min
-        left = data.ranges[90]
-        right = data.ranges[270]
-        front = data.ranges[0]
-        right_cone = []
-        left_cone = []
-        front_cone = []
-
-        if right == float("inf"): 
-            right_min = 0.25
-        else: 
-            for i in range(300,341):
-                right_cone.append(data.ranges[i])
-
-        if left == float("inf"): 
-            left_min = 0.25
-        else: 
-            for o in range(20,61):
-                left_cone.append(data.ranges[o])
-
-        for p in range(len(data.ranges)):
-            if p<20 or p>340:
-                front_cone.append(data.ranges[p])
-            if len(right_cone)!=0:
-                right_min = min(right_cone)
-            if len(left_cone)!= 0: 
-                left_min = min(left_cone)
-
-            front_min = min (front_cone)
+        self.vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
+        self.rate = rospy.Rate(150)
 
 
-
-
-    def wall_avoid(self):
-        global right_min, left_min, front_min,d, det_flag
-        
-        vel_msg = Twist()
-        vel_msg.linear.x = 0.2
-        vel_msg.linear.y = 0
-        vel_msg.linear.z = 0
-        vel_msg.angular.x = 0
-        vel_msg.angular.y = 0
-        vel_msg.angular.z = 0
-        kp = 0.2
-        ki = 0.0
-        kd = 0.2
-        k11 = kp + ki + kd
-        k21 = -kp - 2*kd
-        k31 = kd
-        e31 = e21 = e11 = u = 0
-
-
-        while det_flag<1 and d<2:
-
-            e = (left_min - right_min)
-            e31 = e21
-            e21 = e11
-            e11 = e
-            u = u + k11*e11 + k21*e21 + k31*e31
-            vel_msg.angular.z = u
-            if front_min <= 0.25: #and e > 0:
-                vel_msg.linear.x = 0.08
-                vel_msg.angular.z = u
-            # elif front_min <= 0.25 and e<0: 
-            #     vel_msg.linear.x = -0.05
-            #     vel_msg.angular.z = 0.12
-            else: # front_min > 0.25:
-                vel_msg.linear.x = 0.2
-
-            if e!= float("inf") and e!= float("-inf"):
-                vel_msg.angular.z = e * 5
-           
-            if d!=2 and d!=3:
-                self.pub.publish(vel_msg)
-            # self.rate.sleep()
-            print('wall_controller')
 
     def stop_sign_callback(self,msg):
         global num
@@ -138,9 +63,8 @@ class LineFollower(object):
                 area = abs(box.xmax-box.xmin)*abs(box.ymax-box.ymin)
                 print(area,'area')
                 print('probability',probability)
-                if ((probability >= 0.85) and (area >=6000) and (identified_class == 'stop sign') and num == 2): 
+                if ((probability >= 0.4) and (area >=1000)): 
                     print('stop_sign_detected')
-                    # rospy.sleep(1)
                     num = 1
 
     def camera_callback(self, data):
@@ -171,7 +95,6 @@ class LineFollower(object):
 
         # Calculate centroid of the blob of binary image using ImageMoments
         m = cv2.moments(mask, False)
-    
    
         try:
             cx, cy = m['m10']/m['m00'], m['m01']/m['m00']
@@ -218,46 +141,22 @@ class LineFollower(object):
             #Otherwise turtlebot will go out of the track.
             print(twist_object.linear.x)
             print(twist_object.angular.z)
-            self.pub.publish(twist_object)
+            # rospy.loginfo("ANGULAR VALUE SENT===>"+str(twist_object.angular.z))
+            # Make it start turning
+            # self.moveTurtlebot3_object.move_robot(twist_object)
+            self.vel_pub.publish(twist_object)
             print('chaltay')
             det_flag =1
 
             global num
             global loop_once
-            global april_tag_flag
             if num ==1:
                 twist_object.linear.x = 0
                 twist_object.angular.z = 0
-                self.pub.publish(twist_object)
-                # april_tag_flag = 1
-                #self.moveTurtlebot3_object.move_robot(twist_object)
+                self.vel_pub.publish(twist_object)
+                rospy.sleep(3)
                 num = 2
                 loop_once = 0
-                rospy.sleep(3)
-                april_tag_flag = 1
-                
-
-    def  april_callback(self,data):
-        rospy.loginfo("I'm Here ! ")
-        global angle, linear_dist
-
-        if april_tag_flag == 1:  
-            print("AprilTag baby")      
-            try:
-                vel_msg = Twist()
-                angle = data.detections[0].pose.pose.pose.position.x        #compensate the width to determine the right x difference
-                linear_dist = data.detections[0].pose.pose.pose.position.z           #the z position represents the depth from the camera cooridnates
-                if linear_dist > 0.035:
-                    vel_msg.linear.x = linear_dist
-                    vel_msg.angular.z = -angle * 10 
-                    self.pub.publish(vel_msg)
-                else:                
-                    vel_msg.linear.x = 0
-                    vel_msg.angular.z = 0
-                    self.pub.publish(vel_msg)
-            except IndexError:
-                    rospy.loginfo('Tag not detected')
-
 
 
     def clean_up(self):
@@ -267,8 +166,7 @@ class LineFollower(object):
 
 if __name__ == '__main__':
     rospy.init_node('gazebo_scan_sub')
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
-    tobj = LineFollower(pub)
+    tobj = LineFollower()
     tobj.wall_avoid()
 
     rospy.spin()

@@ -1,5 +1,5 @@
 
-## AuE893 Final Project Gazebo Model
+## AuE8230 Final Project Gazebo Model - Group 3
 
 Dependencies that are not included:
 
@@ -19,11 +19,3 @@ There are 3 sections to this project:
 * Task 3: AprilTag tracking - Spawn another TB3 in the environment past the line. Attach an AprilTag onto the robot. You must teleop this TB3 (there are several packages available online, to enable teleop terminals; use the namespace concept to send seperate /cmd_vel values to seperate robots), and the preceding TB3 should follow it.
 
 
-This model contains code from the following repositories:
-
-* (TB3 model + inpsiration) TB3 Autorace: https://github.com/ROBOTIS-GIT/turtlebot3_autorace_2020.git
-
-Maintainers:
-
-* Huzefa Kagalwala (TA)
-* Utkarsha Chaudhari (TA)
