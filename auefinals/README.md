@@ -12,7 +12,8 @@ Project divided into autonomous maneuvers in simulation and real world environme
 
 ### Gazebo Environment
 
-<img width="334" alt="image" src="https://user-images.githubusercontent.com/79803663/166184029-a7108dd4-e2b6-40a9-92f8-bd3abbe7bd25.png">
+![world_1](https://user-images.githubusercontent.com/79803663/166186834-9a88838c-8bbf-4044-84e5-234fb0fb9f52.png)
+
 
 ### Real World Environment
 
