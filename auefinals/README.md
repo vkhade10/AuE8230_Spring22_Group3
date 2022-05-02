@@ -34,6 +34,9 @@ For this task you will need to spawn another TB3 in the environment in the empty
 
 ## Gazebo Simulations
 
+https://user-images.githubusercontent.com/79803663/166188070-82cc406d-f6ff-49c6-94ee-ab7811f7afe2.mp4
+
+
 ## Real-world Demo 
 
 
