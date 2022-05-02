@@ -10,11 +10,11 @@ Project divided into autonomous maneuvers in simulation and real world environme
 
 ## The Environment
 
-### 1. Gazebo Environment
+### Gazebo Environment
 
 <img width="334" alt="image" src="https://user-images.githubusercontent.com/79803663/166184029-a7108dd4-e2b6-40a9-92f8-bd3abbe7bd25.png">
 
-### 2. Real World Environment
+### Real World Environment
 
 ## Tasks
 
@@ -42,15 +42,15 @@ The project was created on ROS1 (noetic) on Ubuntu 20.04.
 
 Use the below lines in your terminal to start the launch files.
 
-1. For Gazebo Simulation-
+1. For Gazebo Simulation -
 
-`roslaunch aue_finals turtlebot3_autonomy_finals.launch`
+ - `roslaunch aue_finals turtlebot3_autonomy_finals.launch`
 
 2. For Real World -
-  1. Bringup Turtlebot and Raspicam
-       `roslaunch turtlebot3_bringup turtlebot3_robot.launch`
-       `roslaunch turtlebot3_bringup turtlebot3_rpicamera.launch`
-  2. Integrated Launch File
+  - 1. Bringup Turtlebot and Raspicam -
+       - `roslaunch turtlebot3_bringup turtlebot3_robot.launch`
+       - `roslaunch turtlebot3_bringup turtlebot3_rpicamera.launch`
+  - 2. Integrated Launch File
 
 
 ### Dependencies
